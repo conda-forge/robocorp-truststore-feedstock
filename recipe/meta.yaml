@@ -1,3 +1,4 @@
+{% set python_min = '3.10' %}
 {% set name = "robocorp-truststore" %}
 {% set version = "0.8.0" %}
 
@@ -6,21 +7,21 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/robocorp_truststore-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/robocorp_truststore-{{ version }}.tar.gz
   sha256: 92d8f3d6dc10b9b7825683ae8dc1e134a0c3ade81c99554e3ddd4eafa59a8acf
 
 build:
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.10
+    - python {{ python_min }}
     - flit-core >=3.2,<4
     - pip
   run:
-    - python >=3.10
+    - python >={{ python_min }}
 
 test:
   imports:
@@ -29,6 +30,7 @@ test:
     - pip check
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   summary: Verify certificates using native system trust stores
